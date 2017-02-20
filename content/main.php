@@ -25,8 +25,10 @@
 		}else{
 			$_SESSION['Logged']='1';
 		}
+		$_POST['btnLogin'];
 	}elseif(isset($_POST['btnRegister'])){
 		//Register attempt
+		unset($_POST['btnRegister']);
 	}elseif($_SESSION['Logged']=='1'){
 		//Just let go
 	}else{
@@ -55,7 +57,7 @@
 <style>
 	#mastertable{
 		margin-top: 40px;
-		max-width: 70%;
+		max-width: 80%;
 	}
 	table,td,tr,th{
 		text-align: center;
@@ -103,11 +105,36 @@
 $(document).on('click','#nav-toggle',function(e){
 	$("#nav-menu").toggleClass( "is-active" );
 });
+$(document).on('click','#logout',function(e){
+	window.location.href = 'logout.php';
+});
+function showResult(){
+	var id=document.getElementById("idS").value;
+	var titolo=document.getElementById("titoloS").value;
+	var autore=document.getElementById("autoreS").value;
+	var data=document.getElementById("dataS").value;
+	var tags=document.getElementById("tagsS").value;
+	xmlhttp=new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      $('#tbody').html($(this.responseText));
+    }
+  }
+	xmlhttp.open("GET","search.php?id="+id+"&titolo="+titolo+"&autore="+autore+"&data="+data+"&tags="+tags,true);
+  xmlhttp.send();
+
+}
+window.onload = function() {
+  showResult();
+};
 </script>
 <nav class="nav">
   <div class="nav-left">
     <a class="nav-item">
       <img src="logo.png" alt="EzAppunti logo">
+    </a>
+		<a id="logout" class="nav-item">
+      Logout
     </a>
 
   </div>
@@ -146,7 +173,7 @@ $(document).on('click','#nav-toggle',function(e){
       Docs
     </a>
 
-    <span style="margin-left:20px" class="nav-item">
+    <span style="" class="nav-item">
 
       <a class="button is-primary">
         <span class="icon">
@@ -194,40 +221,21 @@ $(document).on('click','#nav-toggle',function(e){
 <h1 class="title is-1">Appunti</h1>
 <table class="table is-striped" id="mastertable" align="center">
 	<thead>
-		<th>Id</th>
-		<th>Titolo</th>
-		<th>Autore</th>
-		<th>Data</th>
-		<th>Visual</th>
-		<th>Likes</th>
-		<th>Dislikes</th>
-		<th>Tags</th>
-	</thead>
-	<tbody>
+		<th><input id="idS" onkeyup="showResult()" class="input" type="text" placeholder="Id"></th>
+		<th><input id="titoloS" onkeyup="showResult()"  class="input" type="text" placeholder="Titolo"></th>
+		<th><input id="autoreS" onkeyup="showResult()" class="input" type="text" placeholder="Autore"></th>
+		<th><input id="dataS" onkeyup="showResult()" class="input" type="text" placeholder="Data"></th>
+		<th></td><td></td><td></td>
+		<th><input id="tagsS" onkeyup="showResult()" class="input" type="text" placeholder="Tags"></th>
 		<?php
-			foreach ($lines as $line) {
-				$data = explode(";",$line);
-				echo "<tr>";
-				foreach ($data as $key => $value) {
-					if($key==3){
-						printf("<td>%s</td>",date('d/m/Y H:i:s', floatval($value)));
-						continue;
-					}elseif($key==7){
-						echo "<td>";
-						foreach (explode(",",$value) as $tag) {
-							if($tag != ""){
-								printf('<span class="tag is-primary">%s</span>',$tag);
-							}
-						}
-						echo "</td>";
-						continue;
-					}
-					printf("<td>%s</td>",$value);
-				}
-				echo "</tr>";
+			if(!($_SESSION['UserData'][3]=='*')){
+				echo "<td></td><td></td>";
 			}
-		?>
-	</tbody>
+		 ?>
+
+	</thead>
+	<tbody id="tbody">
+ </tbody>
 </table>
 </div>
 <footer class="footer">

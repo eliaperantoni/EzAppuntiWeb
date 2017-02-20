@@ -1,6 +1,6 @@
 <?php
   session_start();
-  if($_SESSION && $_SESSION['Logged']=='1' && isset($_SESSION['UserData'])){
+  if($_SESSION && isset($_SESSION['Logged']) && $_SESSION['Logged']=='1' && isset($_SESSION['UserData'])){
     header("Location: main.php");
 		exit;
   }
@@ -54,7 +54,7 @@
     bottom: 20px;
     right:20px;
   }
-  @media screen and (orientation: portrait) {
+  @media screen and (max-aspect-ratio: 13/9) {
 		.bug{
 		  position: relative;
       bottom: 20px;
@@ -62,6 +62,14 @@
 		}
 	}
 </style>
+<script>
+$(document).on('click','#loginButton',function(e){
+	$("#loginButton").addClass( "is-loading" );
+});
+$(document).on('click','#regButton',function(e){
+	$("#regButton").addClass( "is-loading" );
+});
+</script>
 <h1 class="title is-1">EzAppunti</h1>
 <h4 class="subtitle is-4">Login or Register</h4>
 <div class="failed box notification is-danger">
@@ -76,7 +84,7 @@
       <input class="input" type="password" placeholder="Password" name="password">
     </p>
     <p class="control">
-      <button type="submit" class="button is-primary" name="btnLogin">Login</button>
+      <button id="loginButton" type="submit" class="button is-primary" name="btnLogin">Login</button>
     </p>
   </form>
 <div class="form-container">
@@ -92,7 +100,7 @@
       <input class="input" type="password" placeholder="Repeat password" name="Rrepeatpassword">
     </p>
     <p class="control">
-      <button type="submit" class="button is-primary" name="btnRegister">Register</button>
+      <button id="regButton" type="submit" class="button is-primary" name="btnRegister">Register</button>
     </p>
   </form>
 </div>
