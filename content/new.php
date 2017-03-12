@@ -8,7 +8,7 @@ session_start();
     }
   }
   $id=$max+1;
-  $out=strval($id).";".$_GET['titolo'].";".$_SESSION['UserData'][1].";"."1486469828.806685;0;0;0".";".$_GET['tags'];
+  $out=strval($id).";".$_GET['titolo'].";".$_SESSION['UserData'][1].";"."1486469828.806685;0;0;0".";".$_GET['tags']."\n";
   array_push($lines,$out);
   $f = fopen("../data/".strval($id).".txt", "w");
   fwrite($f, $_GET['content']);
