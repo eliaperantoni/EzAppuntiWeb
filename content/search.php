@@ -24,7 +24,11 @@
       continue;
     }
     echo "<tr>";
+    $idRaw = "";
     foreach ($data as $key => $value) {
+      if($key==0){
+        $idRaw = $value;
+      }
       if($key==3){
         printf("<td>%s</td>",date('d/m/Y H:i:s', floatval($value)));
         continue;
@@ -38,17 +42,22 @@
         echo "</td>";
         continue;
       }
-      printf("<td>%s</td>",$value);
+      if($key==4 || $key==5 || $key==6){
+        continue;
+      }
+      printf("<td class='note' id='".$idRaw."'>%s</td>",$value);
     }
     if(!($_SESSION['UserData'][3]=='*')){
       $disabled = "is-disabled";
       if($data[2]==$_SESSION['UserData'][1]){
         $disabled = "";
       }
-      echo '<td><a class="button is-primary is-small '.$disabled.'"><span class="icon is-small"><i class="fa fa-edit"></i></span><span>Edit</span></a></td>';
-      echo '<td><a class="button is-small is-danger '.$disabled.'"><span class="icon is-small"><i class="fa fa-times"></i></span><span>Delete</span></a></td>';
+      echo '<td><a class="editEz button is-primary is-small '.$disabled.'" id='.$data[0].'><span class="icon is-small"><i class="fa fa-edit"></i></span><span>Modifica</span></a></td>';
+      echo '<td><a class="deleteEz button is-small is-danger '.$disabled.'" id='.$data[0].'><span class="icon is-small"><i class="fa fa-times"></i></span><span>Elimina</span></a></td>';
     }
 
     echo "</tr>";
   }
+  echo "%raw%";
+  echo file_get_contents('../master.txt');
 ?>

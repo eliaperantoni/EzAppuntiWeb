@@ -91,19 +91,19 @@ $(document).on('click','#regButton',function(e){
 </div>
   <form action="main.php" method="post">
     <p class="control">
-      <input class="input" type="text" placeholder="Username" name="Rusername">
+      <input class="input is-disabled" type="text" placeholder="Username" name="Rusername">
     </p>
     <p class="control">
-      <input class="input" type="password" placeholder="Password" name="Rpassword">
+      <input class="input is-disabled" type="password" placeholder="Password" name="Rpassword">
     </p>
     <p class="control">
-      <input class="input" type="password" placeholder="Repeat password" name="Rrepeatpassword">
+      <input class="input is-disabled" type="password" placeholder="Repeat password" name="Rrepeatpassword">
     </p>
     <p class="control">
-      <button id="regButton" type="submit" class="button is-primary" name="btnRegister">Register</button>
+      <button id="regButton" type="submit" class="button is-primary is-disabled" name="btnRegister">Register</button>
     </p>
   </form>
 </div>
-<a class="bug icon" alt="Report Bug">
+<a class="bug icon" target="_blank" href="https://github.com/hellix08/EzAppuntiWeb/issues/new" alt="Report Bug">
   <i class="fa fa-bug"></i>
 </a>
